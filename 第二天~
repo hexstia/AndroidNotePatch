@@ -1,0 +1,73 @@
+分析编译流程
+查看envsetup.sh
+关于终端命令的使用：
+
+Invoke ". build/envsetup.sh" from your shell to add the following functions to your environment:
+//选择编译平台
+- lunch:   lunch <product_name>-<build_variant>
+//
+- tapas:   tapas [<App1> <App2> ...] [arm|x86|mips|armv5|arm64|x86_64|mips64] [eng|userdebug|user]
+- croot:   Changes directory to the top of the tree.
+###########################
+- m:       Makes from the top of the tree.
+- mm:      Builds all of the modules in the current directory, but not their dependencies.
+- mmm://指定目录      Builds all of the modules in the supplied directories, but not their dependencies.
+           To limit the modules being buil use the syntax: mmm dir/:target1,target2.
+#####################################
+ - mma:     Builds all of the modules in the current directory, and their dependencies.
+- mmma:    Builds all of the modules in the supplied directories, and their dependencies.
+- cgrep:   Greps on all local C/C++ files.
+- ggrep:   Greps on all local Gradle files.
+- jgrep:   Greps on all local Java files.
+- resgrep: Greps on all local res/*.xml files.
+- sgrep:   Greps on all local source files.
+- godir:   Go to the directory containing a file.
+
+Look at the source to view more functions. The complete list is:
+
+
+71-line :VARIANT_CHOICES=(user userdebug eng)
+版本类型：用户版，调试版，工程机
+481-line lunch
+442-line add_lunch_combo
+
+文件结尾：添加其他的脚本文件
+
+# Execute the contents of any vendorsetup.sh files we can find.
+如果找不到打印到dev/null中
+for f in `test -d device && find -L device -maxdepth 4 -name 'vendorsetup.sh' 2> /dev/null` \
+         `test -d vendor && find -L vendor -maxdepth 4 -name 'vendorsetup.sh' 2> /dev/null`
+do
+    echo "including $f"
+    . $f
+done
+unset f
+//什么意思？？
+addcompletions
+
+
+关于m mm mmm的分析arget Package: BinderDemo (out/target/product/fspad-733/obj/APPS/Bi
+Android.mk文件的分析 ，在哪里定义的？
+inlcude $(BUILD_PACKAGE)生成apk文件
+关于mmm命令的使用测试显示，可以将任意目录下的文件进行编译，只要包含Android.mk文件即可
+所说的任意文件目录为在整个linux文件系统下例如： ～/：
+
+
+makefile :文件介绍
+main.mk
+config.mk
+envsetup.mk
+product_config.mk
+AndroidProducts.mk
+BoardConfig.mk
+关于产品的制作步骤：
+vendorsetup.sh来添加选项。
+1/
+创建fspad -733.mk文件
+2/
+创建AndroidProducts.mk文件(注意在改名时，不要带空格)
+3/
+################################
+boot.img --- kernel  +   ramdisk.img
+
+out/target/system目录 压缩成 system.img文件

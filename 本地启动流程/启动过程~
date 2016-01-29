@@ -1,0 +1,14 @@
+当前的启动流程为ANdroid系统在java部分启动之前启动流程。
+ANdorid的启动过程主要设计几个实体:
+1。bootloader
+2.linux内核/跟文集系统以及当中的init和init.rc
+3/system文件系统及其中一些作为守护进程的可执行程序
+大致分为7个步骤：
+1/BootLoader运行 （linux通用）
+2/linux内核运行	  （linux通用）
+3/内核加载文件系统 （linux通用）
+4/init进程运行
+5/运行init.rc
+6/加载system和data文件系统
+7/运行各种服务(主要为各个守护进程)
+

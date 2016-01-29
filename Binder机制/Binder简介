@@ -1,0 +1,15 @@
+Binder库头文件路径：frameworks/native/include/binder
+Binder库路径：frameworks/native/libs/binder
+binder库最终将生成libbinder.so动态库，本地程序的各个部分同个这个库实现具体的binder框架
+概念：
+Binder和传统的IPC机制相比，融合了远程过程调用RPC的概念，而且这种远程调用不是传统的面向过程的远程调用，而是一种面向对象的远程（进程）调用。
+Android在进程键传递数据使用的是共享内存的方式，这样数据只需要复制一次就能从一个进程到达另一个进程（一般的IPC都需要两步，从用户进程复制到内核，再从内核复复制到服务进程）
+在安全性方面ANdroid也做了考虑，BInder调用时会传递进程的euid到服务端，因此，服务端可以通过检查调用进程的权限来决定是否允许其使用所调用的服务。
+BInder架构
+Binder驱动：Binder的核心，实现各种binder的底层操作。
+servicemanager：提供了Binder的名称到引用对象的转化服务。
+服务端，Binder服务的提供者
+客户端：Binder服务的使用者
+
+
+

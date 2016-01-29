@@ -1,0 +1,27 @@
+产品配置文件的作用是按照Build系统的要求，将生成产品的各种image文件所需要的配置信息（如版本号，各种参数等）/资源（图片，字体，铃声等，），二进制文件（apk,jar,so库等）有机地组织起来，同时进行裁剪，加入或去掉一些模块
+对于产品的配置文件一般放在device和endor下，但是正常开发中，往往会让这两个目录配合使用，通常产品配置文件放在device目录下，而vendor目录下则存放一些硬件的HAL库，编译某一款手机的刷机包之前，需要将手机上一些不开源的HAL库（主要是so文件），驱动等抽取出来，放在vendor目录下。    
+device下的文件目录
+common:用来存放各个产品通用的配置脚本，文件等
+sample:一个产品的配置的例子，写一个新的产品配置时，可以使用sample目录下的文件作为模板。
+google:几个简单的模块，用途不详
+asus,lge,samsung:分别代表宏，LG，三星3家公司，各家公司的产品放在对应的目录下。
+如果需要添加新的产品，可以在device目录下新建一个目录。
+hammerhead手机由LG代工的，它的产品配置文件位于lge目录下，具体内容如下
+
+1---配置文件1，
+verdorsetup.sh
+内容是
+add_lunch_combo fspad_733-eng
+add_lunch_combo fspad_733-user
+#########################################
+2----AndroidProduct.mk
+这个文件会在Build系统的build/core/ProductConfig.mk文件中被包含进去,这个文件最终要的作用是定义了一个变量PRODUCT_MAKEFILES,他定义了本配置目录中所有编译入口文件，但是，每种产品编译时只会使用其中之一.例如,hammerhead目录下AndroidProduct.mk文件的内容为；
+PRODUCT_MAKEFILES := \
+    $(LOCAL_DIR)/fspad_733.mk
+
+3-----BoradConfig.mk
+该文件会被Build系统的envsetup.sh文件包含进去。这个文件主要定义了和设备硬件（包括CPU，wifi,GPS等）相关的一些参数。看懂这个文件的关键是理解文件中使用的编译变量
+4-----XXXX.mk 产品配置的编译入口文件，包含其他配置文件，也定义了一些和产品相关的编译变量/
+	             
+
+

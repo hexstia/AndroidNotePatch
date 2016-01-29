@@ -1,0 +1,6 @@
+Android 编译完成后会生成几个Image文件，包括：boot.img---system.img----recovery.img----userdata.img
+boot.img
+是一种Android自定义的文件格式。该格式包括了一个2*1024大小的文件头，文件头后面是用gzip压缩过的Kernel映像，而后面是一个ramdisk映像，最后是一个载入器程序，这个载入器是可选的，某些映像文件中没有这部分。
+page的整数倍
+ramdisk.img对应的是root目录
+

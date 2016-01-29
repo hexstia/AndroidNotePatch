@@ -1,0 +1,6 @@
+android中Java标准库位于根目录:/libcore
+主要查看两个mk文件NativeCode.mk和JavaLibary.mk文件一个是本地的mk编译
+一个是java库的生成
+注意点: 原来模块名为：core --->core-libart模块
+他们的jar包生成在目标系统的/system/framework目录中。
+libcore最主要目录为luni 分别代表的是lang util net io

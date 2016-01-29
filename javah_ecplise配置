@@ -1,0 +1,4 @@
+/usr/bin/javah
+${project_loc}/jni
+-d ${project_loc:}/jni -classpath "${project_classpath};${env_var:ANDROID_SDK_HOME}/platforms/android-20/android.jar" 
+ ${java_type_name}

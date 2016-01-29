@@ -1,0 +1,92 @@
+命令配置
+	  用户名配置
+	git config --global user.name "Neil Hexstia"
+	git config --global user.email "wangyz@farsight.cn"
+	git config --global color.ui always
+	git config --global core.editor vim
+	git init
+	以上命令必须在同一个终端上来敲击 
+	// 以上为配置工作 
+	 代码的提交（保证代码运行无误才能提交）
+
+/************************************************************/
+	//跟踪git需要关注的代码文件
+
+		git add
+
+
+	//查看git代码仓库的文件状态
+	：：：绿色代表被跟踪的文件
+	：：：红色代表未被跟踪的文件
+
+		git commit   提交文件的备注事件信息 书写代码信息:
+
+	//bug  ID关于提交的代码的方式（关于前版本的作用以及修改的工作）
+	例如：
+	    Initial commit
+	o Create a new file that hello.c file
+	
+
+	显示：
+			     （ID标示）
+	[master (root-commit) fbe4ab3] Initial commit  分支
+	 2 files changed, 11 insertions(+)
+ 	create mode 100755 a.out
+ 	create mode 100644 hello.c
+/************************************************************/		
+	//git log关于提交的信息
+	commit fbe4ab3d6d8549c0942b19586bb02a933d05072a(ID标示为MD5码)
+	Author: Neil Hexstia <wangyz@farsight>
+	Date:   Thu Jan 28 14:11:50 2016 +0800
+
+   	 Initial commit
+    
+    	o create a new file that hello.c file(问什么用 o 标志位)
+
+/////////////////////////
+情况1  文件被删除时
+git status
+git checkout xxx.c
+
+情况2  
+git diff  查看文件的添加和删除
+	
+	比较时 有一个的时间点修改 ‘-’号为上次时间点状态 (上一次提交版本)
+				 ‘+’号为当前时间点状态 （当前版本或者是当前提交版本 ）
+取上下文前后三行的标示
+例如：index c7dd56e..bf0023f 100644
+@@ -3,9 +3,6 @@ int main(int argc, const char *argv[])
+ {
+ 	printf("hello World!\n");
+ 	printf("hello 15101\n");
+-	printf("hello wangyz\n");
+-	printf("hello you \n");
+-	printf("hello china\n");
+ 	printf("beijing\n");
+ 	return 0;
+ }
+
+情况三 对于提交之间的比较的版本控制
+	git diff ac3443a577c4e58e41193f408ff71cffadf1f58f fbe4ab3d6d8549c0942b19586bb02a933d05072a
+
+
+情况四  关于pach 的git diff 的修改工作
+	diff的工作是对于不同的版本的diff的修改（分支开发）
+       （将整体的一个项目分拆成多个git来进行控制，每一个单独的git在单独看成一个模块来处理）
+
+
+情况五  分支控制的git（库），
+
+
+
+情况六  git format-patch -p2   ::(2代表的生成的数量)
+	解析：根节点的方式 ，提交 字符类之间关系
+情况七  git init 
+	git am ~/gittmp/0001.....path （不明白怎么用）
+	//用来返回树型结构的某一个值
+关于地基的方式
+A--->B----->C(如果是以前的状态，是无法还原的)
+	
+	
+
+

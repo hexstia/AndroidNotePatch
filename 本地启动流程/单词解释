@@ -1,0 +1,22 @@
+FastBoot 是Android设计的一套通过USB来个人能信手机分区映射的协议，方便开发人员能快速更新指定的手机分区。但是一般的零售机上往往去掉了FastBoot，Goolgle销售的开发机则带有FastBoot模块
+Recovery模式是Android特有的升级系统。利用Recovery模式，手机可以进行恢复出厂设置，或者执行OTA，补丁和固件升级。进入Recovery模式实际上是启动了一个文本模式的Linux。
+装载和启动Linux内核
+	Android的boot.img存放的就是Linux内核和一个根文件系统，Bootloader会把boot.img镜像装载进内存，然后Linux内核会执行整个系统的初始化，完成后装载根文件系统，最后启动Init进程
+	启动Init进程
+	Linux内核加载完毕后，会首先启动Init进程，Init进程是系统的第一个进程，在Init几次呢好那个的启动过程中，会解析Linux的配置脚本init.rc文件的内容，Init进程会装载Android的文件系统，创建系统目录，初始化树形系统，启动Android系统重要的守护进程（Linux级别），这些进程包括USB守护进程，adb守护进程，vold守护进程，rild守护进程等。
+最后Init进程也会作为守护进程来执行修改属性请求，重启崩溃的进程等操作。
+
+	启动ServiceManager
+	ServiceManager由Init进程启动，它主要的作用是管理Binder服务，负责Binder服务的注册与查找。
+	启动zygote进程
+	Init进程初始化结束时，会启动zygote进程。zygote进程负责fork出应用进程，是所有应用进程的父进程。zyogte进程初始化时会创建Dalvik虚拟机，预装在系统的资源文件和Java类。所有从Zygote进程fork出的用户进程将继承和共享这些预加载的资源，不用浪费时间重新加载，加快了应用程序的启动过程。启动结束后，zygote
+进程也将变为守护进程，负责相应启动apk应用程序的请求
+	启动SystemServer
+	SystemServer是zygote进程fork出的第一个进程，也是整个Android系统的核心进程。在SystemServer中运行着Android系统大部分的Binder服务。SystemServer首先启动本地服务SensorService；接着启动包括ActivityManagerService，windowsManagerService，packageManagerService在内的所有Java服务。
+	启动MediaServer
+	MediaServer由Init进程启动，它包含了一些多媒体相关的本地binder服务，包括CameraService，AudioFlingerService，MediaPlayerService和AudioPolicyService.
+	启动Launcher。
+SystemServer 加载所有Java服务后，最后会调用ActivityManagerService的systemReady（）方法，在这个方法中会发出“android.intent.category.HOME”.凡是相应这个Intent的APK应用程序运行起来，Launcher应用是Android系统默认的桌面应用，一般只有它会相应这个Intent，因此，系统开机后，第一个运行的应用就是Launcher。
+   
+	
+

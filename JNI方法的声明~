@@ -1,0 +1,26 @@
+关于JNI方法的调用过程我们已经了解的非常清楚，现在我们如何实现一个自己定义的方法的使用呢？
+在java代码中
+1。类中创建一个方法
+例如：
+public native void show();
+2。类中创建游离静态代码快书写加载库
+例如：
+static {
+		System.loadLibrary("hello-jni");
+	}
+3。调用javah程序生成该类的头文件
+4。定义头文件中的方法在xxx.c文件中
+JNIEXPORT void JNICALL Java_com_example_hellojni_HelloJni_show
+(JNIEnv env, jobject obj){
+首先介绍一下参数：
+参数1 jnienv类型是指向可用JNI函数表的接口指针；
+参数2 jobject是hellojni类实例的java对象引用相当与java中的this关键字
+原生代码通过jnienv接口指针提供的各种函数来使用虚拟机的功能。jnienv是一个指向线程-局部数据的指针，而线程-局部数据中包含指向函数表的指针。实现原生方法的函数将JNIenv接口指针作为他们的第一个参数
+}
+注意
+传递给每一个原声方法调用的JNIenv接口指针在与方法调用相关线程中也有效，但是它不能被缓存以及被其他县城使用。
+原生代码是C与原生代码是C++其调用JNI函数的语法不同。C代码中，JNIenv是指向JNINativeInterface结构的指针，为了访问任何一个JNI函数，该指针需要首先被解引用，因为C代码中的JNI函数不了解当前的JNi环境，JNIenv实力应该作为第一个参数传递给每一个JNI函数调用者。
+实例方法：
+
+
+

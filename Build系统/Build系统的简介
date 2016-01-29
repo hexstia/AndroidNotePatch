@@ -1,0 +1,25 @@
+功能三部分，一部分编译程序 C，java
+	   二部分生成目标系统镜像
+	   三部分维护各个模块之间的依赖关系
+
+从大方面讲，Android的build系统可以分成三大块：第一块位于build/core目录下的文件  build系统的框架和核心。
+					   第二块位于device目录下的文件，存放的是具体产生的配置文件；
+					  第三块各个模块的编译文件：Android.mk，位于模块的源文件目录下。本章将分析三个部分脚本
+
+文件一的分析：
+	envsetup.sh文件的作用
+add_lunch_combo命令的功能是将调用该命令所传递的参数存放到一个全局的数组变量LUNCH_MENU_CHOICES执行lunch命令时打印出的菜单想正式这个数组的内容
+lunch 命令
+make命令：调用根目录下的makefile文件 ，里面指向build/core/main.mk文件
+这个main.mk非常的巨大，单内容构成三部分，变量定义，函数定义，目标依赖规则。
+在buildcore的目录下有两个文件夹，一个叫combo目录：主要存放定义了GCC编译器的版本和参数 
+另一个叫clang定义了llvm编译器clang的路径和参数
+gnu make的版本检查，
+make命令的使用
+make关于include 和-include命令区别
+检查Java的版本是否是1.7和1.6，不是则会报错退出，如果使用的java版本是1.7在linux下还要求必须是openjdk的版本，否则要求是oracle的jdk版本
+关于Build的构建模块为pathmap.mk文件中进行的处理
+
+
+
+

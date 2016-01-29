@@ -1,0 +1,16 @@
+Java运行环境被称之为Android Runtime包括虚拟机和核心库，虚拟机是java运行的基础，核心库提供尽量与javase 标准兼容的类库
+Dalvik虚拟机主要完成对象生命周期管理，堆栈管理，安全和异常管理，以及垃圾回收等重要管理，与标准的java虚拟机运行的class字节码不同,Dalvik虚拟机所用的字节码是dex格式，dex格式的文件针对小内存使用做了优化.
+
+Dalvik目录：/dalvik 有实现和工具
+
+其中子目录vm libdex,dx,dalvikvm 几个子目录为虚拟机的核心实现，dexopt,dexdump ,dexlist等子目录为辅助工具的内容，大多数工具和库都有主机和目标机两个版本，在编译过程中将生成目标及和主机的多个目标。
+
+JIT（just-in-time compiler）简称 运行时编译 android2.2系统支持 
+
+传统java虚拟机是基于堆栈的，但是dalvik虚拟机是基于寄存器的，这样的实现方式在通用性和可移植性上差了一些，但是可以获得更好的性能
+Dalvik虚拟机的底层是有C语言和汇编语言实现的，依赖于linux内核的一些功能，比如线程机制和底层内存管理机制
+Dalvik虚拟机核心内容还包括一下几个目录
+libdex ：dex字节码解析处理程序，由纯C写成的工具库生成静态库libdex.a
+vm:生成动态库，链接静态库libdex.a ---->libdvm.so
+dalvik 虚拟机的可执行程序为dalvik，它将链接libdvm.so
+dx：dx工具

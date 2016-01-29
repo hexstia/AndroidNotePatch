@@ -1,0 +1,23 @@
+ 关于 模拟器运行系统镜像的方式，配置信息在：
+hexstia@unbuntu0:~/adt-bundle-linux-x86_64-20140702/sdk/.android/avd/xzc.avd$ ls
+cache.img  config.ini  emulator-user.ini  hardware-qemu.ini  sdcard.img  userdata.img  userdata-qemu.img
+ init:
+ 路径为 system /core/init 
+首先是内核启动过程加载 函数startkernel（）-》init_post()->run_init_process()内部执行execute ——command 中哦能否的进程文件路径
+执行execve（）调用查找的是系统路径下的脚本文件所 init.rc init.goldfish.rc
+init
+int fd_count = 0;
+    struct pollfd ufds[4];
+    char *tmpdev;
+    char* debuggable;
+    char tmp[32];
+    int property_set_fd_init = 0;
+    int signal_fd_init = 0;
+    int keychord_fd_init = 0;
+    bool is_charger = false;
+
+    if (!strcmp(basename(argv[0]), "ueventd"))
+        return ueventd_main(argc, argv);
+
+    if (!strcmp(basename(argv[0]), "watchdogd"))
+        return watchdogd_main(argc, argv);

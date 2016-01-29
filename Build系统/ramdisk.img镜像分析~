@@ -1,0 +1,17 @@
+内存磁盘镜像存储了Linux内核启动时装载的核心文件，通常的镜像文件名为ramdisk.img.尽管ramdisk.img需要放在Linux内核镜像（boot.img）中，但却属于Android源代码的一部分，也就是说，在编译Android源代码后，会生成一个ramdisk.img文件，其实该文件就是root目录压缩后生成的文件。ramdisk,ing文件中封装的内存是Linux内核与Androiud系统接触的第一批文件，其中有一个非常重要的init命令（在root目录中可以找到该命名文件），该命令用于读取init.rc以及相关配置文件中的初始化命令。之所以称ramdisk.img为内存磁盘镜像，是因为ramdisk.img中
+
+内存磁盘镜像存储了Linux内核启动时装载的核心文件,
+init脚本在这里修改
+ramdisk属于boot.img(包含关系)
+制作修改解压
+命令：
+mkdir ramdisk
+cd ramdisk
+
+方式1：gunzip -c ../ramdisk.img >../ramdisk.cpio
+	cpio -i < ../ramdisk.cpio
+
+方式2：gunzip -c ../ramdisk.img |cpio -i
+制作：
+mkbootfs . |minigzip > ../ramdisk.img.new
+

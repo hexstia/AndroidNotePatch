@@ -1,0 +1,11 @@
+linux内核镜像包含了内核二进制文件（ZImage）和上一小节介绍的内存磁盘镜像（ramdisk.img）,一般对应的镜像文件是boot.img(也可以是任何其他的名字)。由于ramdisk.img中包含的init命令是与Linux内核第一个交互的程序，所以在boot.img中需要同时包含Linux内核和ramdisk.img.当linux内核调用init后，系统就会根据init.rc及其相关文件中的代码对整个Android系统进行初始化。其中主要的初始化工作就是建立如/system /data等系统目录然后使用mount命令将相应的镜像挂在得到这些目录上。
+命令：
+unpackbootimg为解压命令，mkbottimg命令可以将zImage和ramdisk.img文件合并成boot.img下面先来用unpackbootimg命令将boot.img解压，看看boot.img是不是有Zimage和ramdisk.img组成
+mkdir boot
+cd boot
+unpackbootimg -i ../boot.img
+mkdir ramdisk
+cd ramdisk
+gunzip -c ../boot.img-ramdisk.gz |cpio -i
+
+

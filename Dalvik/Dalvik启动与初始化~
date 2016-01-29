@@ -1,0 +1,7 @@
+
+路径：/home/hexstia/SourceCode5.0/androidL/frameworks/base/core/jni/AndroidRuntime.cpp
+Dalvik虚拟机在zygote进程中启动和初始化。AndroidRuntime.cpp的startVM（）函数开始启动Dalvik
+AndroidRuntime--->JNI_CreateJAVAVM();
+执行顺序start()---->jni_invocation.cpp----->init()----->AndroidRuntime.cpp----->startVm()
+startVm()：主要是解析各种虚拟机相关的属性，利用保存在属性中的值初始化系统的变量。
+startVm()----->JNI_CreateJavaVM()(属于jni_internal.cc)
